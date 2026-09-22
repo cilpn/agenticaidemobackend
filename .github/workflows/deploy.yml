@@ -2,7 +2,7 @@ name: Build and deploy agenticdemo-api
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch: {}
 
 permissions:
