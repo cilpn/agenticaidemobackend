@@ -1,0 +1,37 @@
+services:
+  app:
+    image: ghcr.io/cilpn/agenticdemo:latest
+    container_name: agenticdemo
+    restart: unless-stopped
+    networks:
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.agenticdemo.rule=Host(`aidemo.cilpron.com`)"
+      - "traefik.http.routers.agenticdemo.entrypoints=websecure"
+      - "traefik.http.routers.agenticdemo.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.agenticdemo.priority=1"
+      - "traefik.http.services.agenticdemo.loadbalancer.server.port=80"
+      - "traefik.docker.network=traefik-public"
+
+  api:
+    image: ghcr.io/cilpn/agenticdemo-api:latest
+    container_name: agenticdemo-api
+    restart: unless-stopped
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ALLOWED_ORIGIN=https://aidemo.cilpron.com
+    networks:
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.agenticdemo-api.rule=Host(`aidemo.cilpron.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.agenticdemo-api.entrypoints=websecure"
+      - "traefik.http.routers.agenticdemo-api.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.agenticdemo-api.priority=10"
+      - "traefik.http.services.agenticdemo-api.loadbalancer.server.port=8787"
+      - "traefik.docker.network=traefik-public"
+
+networks:
+  traefik-public:
+    external: true
