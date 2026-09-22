@@ -15,7 +15,7 @@ services:
       - "traefik.docker.network=traefik-public"
 
   api:
-    image: ghcr.io/cilpn/agenticdemo-api:latest
+    image: ghcr.io/cilpn/agenticaidemobackend:latest
     container_name: agenticdemo-api
     restart: unless-stopped
     environment:
