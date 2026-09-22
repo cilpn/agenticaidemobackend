@@ -13,7 +13,7 @@ services:
       - "traefik.http.routers.agenticdemo-api.rule=Host(`aidemo.cilpron.com`) && PathPrefix(`/api`)"
       - "traefik.http.routers.agenticdemo-api.entrypoints=websecure"
       - "traefik.http.routers.agenticdemo-api.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.agenticdemo-api.priority=10"
+      - "traefik.http.routers.agenticdemo-api.priority=1000"
       - "traefik.http.services.agenticdemo-api.loadbalancer.server.port=8787"
       - "traefik.docker.network=traefik-public"
 
